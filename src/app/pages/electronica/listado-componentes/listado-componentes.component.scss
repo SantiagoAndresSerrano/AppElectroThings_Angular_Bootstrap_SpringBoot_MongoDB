@@ -2,13 +2,42 @@ div .alert {
     opacity: 0.8;
 }
 
-#buscador{
-input{
-  color:rgb(0, 0, 0);
-  text-decoration: solid;
-  font-weight: bold;
 
-}
+
+#buscador {
+  div{
+
+    input{
+      color:rgb(0, 0, 0);
+      text-decoration: solid;
+      font-weight: bold;
+
+    }
+    select{
+      color:white;
+      background-color: #212529;
+      border-radius: 2px;
+      border-color: black;
+
+
+    }
+
+    input:hover, select:hover{
+      border-color: black;
+    }
+    button{
+        background-color: none;
+
+      }
+
+     button:hover{
+        border-color:none;
+        opacity: 0.7;
+      }
+
+
+  }
+
 
 input:hover{
   border-color: #212529;
@@ -67,6 +96,9 @@ table {
    button:hover{
       background-color: #393e43;
     }
+    button:focus{
+      background-color: #58616b;
+    }
 
   }
 
@@ -78,6 +110,8 @@ table {
    button:hover{
       background-color: #393e43;
     }
+
+
 
 
   }

@@ -13,138 +13,106 @@ import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-listado-componentes',
   templateUrl: './listado-componentes.component.html',
-  styleUrls: ['./listado-componentes.component.scss']
+  styleUrls: ['./listado-componentes.component.scss'],
 })
 export class ListadoComponentesComponent implements OnInit {
-
-  navigationExtras : NavigationExtras = {
-
-      state : {
-        value :null
-      }
+  navigationExtras: NavigationExtras = {
+    state: {
+      value: null,
+    },
   };
-//PRODUCTOS LISTADO
-productos: ProductoDTO[] = [];
+  //PRODUCTOS LISTADO
+  productos: ProductoDTO[] = [];
 
-//PRODUCTO SELECCIONADO
-productoSelect:ProductoDTO[] = [];
-idProdSelect:string='';
-codProdSelect:string='';
-nombrProdSelect:string='';
-
-
+  //PRODUCTO SELECCIONADO
+  productoSelect: ProductoDTO[] = [];
+  idProdSelect: string = '';
+  codProdSelect: string = '';
+  nombrProdSelect: string = '';
 
   //FILTRO BUSQUEDA PRODUCTOS
   filtroProdBusqueda: string = '';
   filtroProdCampo: string = '';
 
+  //SEGURIDAD
+  isAdmin = false;
+  isUser = false;
 
-//SEGURIDAD
-roles: string[]=[];
-isAdmin = false;
-isUser = false;
+  //PAGINADO
 
- //PAGINADO
+  //Pages
+  nroPage = 0;
+  isFirstPage = false;
+  isLastPage = false;
+  totalPages = 0;
 
- //Pages
- nroPage=0;
- isFirstPage=false;
- isLastPage=false;
- totalPages=0;
+  //Elements
+  nroElements = 10;
+  nroCurrentElements = 0;
+  nroTotalElements = 0;
 
- //Elements
- nroElements=10;
- nroCurrentElements=0;
- nroTotalElements=0;
+  //Caracteristicas
+  orderBy = 'id';
+  direction = 'asc';
 
-//Caracteristicas
- orderBy='id';
- direction='asc';
+  //ERRORES
+  errMsj: string;
 
-//ERRORES
- errMsj: string;
+  constructor(
+    private router: Router,
+    private productoService: ProductosService,
+    private tokenService: TokenService,
+    private toast: NgToastService,
+    private ngxService: NgxUiLoaderService
+  ) {}
 
+  ngOnInit() {
+    this.listarProductos();
+    this.checkEliminarProducto();
+  }
 
-
-constructor(
-  private router: Router,
-  private productoService:ProductosService,
-  private tokenService:TokenService,
-  private toast: NgToastService,
-  private ngxService: NgxUiLoaderService,
-
-) { }
-
-ngOnInit(){
-  this.listarProductos();
-  this.checkEliminarProducto();
-}
-
- //=========== SEGURIDAD ==============
+  //=========== SEGURIDAD ==============
   //Aplicada en productos.guard y agregada en el routing
 
-//=========== METODOS CRUD ==============
+  //=========== METODOS CRUD ==============
 
-//----------LISTADO PRODUCTOS ---------------
-listarProductos(){
-this.productoService.listado(this.nroPage,this.nroElements,this.orderBy,this.direction).subscribe(
-  (data:any)=>{
-    this.productos = data.content;
-    this.isFirstPage = data.first;
-    this.isLastPage = data.last;
-    this.totalPages = data.totalPages;
-    this.nroCurrentElements = data.numberOfElements;
-    this.nroTotalElements = data.totalElements;
+  //----------LISTADO PRODUCTOS ---------------
+  listarProductos() {
+    this.productoService
+      .listado(this.nroPage, this.nroElements, this.orderBy, this.direction)
+      .subscribe(
+        (data: any) => {
+          this.productos = data.content;
+          this.isFirstPage = data.first;
+          this.isLastPage = data.last;
+          this.totalPages = data.totalPages;
+          this.nroCurrentElements = data.numberOfElements;
+          this.nroTotalElements = data.totalElements;
+        },
+        (err) => {
 
-  },
-  err => {
+          this.errMsj = err.error.message;
 
-    this.errMsj = err.error.message;
+          //TOAST ERROR
+          setTimeout(() => {
+            this.toast.error({
+              detail: 'ERROR',
+              summary: this.errMsj,
+              duration: 2000,
+            });
+          }, 600);
 
-       //TOAST ERROR
-       setTimeout(() => {
-        this.toast.error({detail:"ERROR",summary:this.errMsj , duration:2000});
-      }, 600);
-      //FIN TOAST ERROR
-    console.log(err);
+          //FIN TOAST ERROR
+          //console.log(err);
+          //console.log('listado');
 
+          this.refresh(3000);
+        }
+      );
   }
-);
-}
-
-//----------LISTADO PRODUCTOS FILTER ---------------
-listarProductosFilter(){
-this.productoService.listadoFilter(this.filtroProdBusqueda,this.nroPage,this.nroElements,this.orderBy,this.direction).subscribe(
-  (data:any)=>{
-    this.productos = data.content;
-    this.isFirstPage = data.first;
-    this.isLastPage = data.last;
-    this.totalPages = data.totalPages;
-    this.nroCurrentElements = data.numberOfElements;
-    this.nroTotalElements = data.totalElements;
-
-
-    //console.log(this.productos);
-  },
-  err => {
-    this.errMsj = err.error.message;
-
-    //TOAST ERROR
-    setTimeout(() => {
-     this.toast.error({detail:"ERROR",summary:'Producto/s No Encontrados!!'  , duration:2000});
-   }, 600);
-   //FIN TOAST ERROR
-
-   this.filtroProdBusqueda='';
-
- //console.log(err);
-
-  }
-);
-}
 
   //-----LISTADO PRODUCTOS FILTER/CAMPO ---------------
-  listarProductosFilterAndField() {
+  listarProductosFilter() {
     this.productoService
       .listadoFilterAndField(
         this.filtroProdBusqueda,
@@ -172,256 +140,230 @@ this.productoService.listadoFilter(this.filtroProdBusqueda,this.nroPage,this.nro
           setTimeout(() => {
             this.toast.error({
               detail: 'ERROR',
-              summary: 'Producto/s No Encontrados!!',
+              summary: this.errMsj,
               duration: 2000,
             });
           }, 600);
+
           //FIN TOAST ERROR
-          console.log(err);
+          //console.log(err);
+          //console.log('listado-filter');
+
+          this.refresh(3000);
         }
       );
   }
 
+  setFilter(filtro: string, campo: string, nroPag:number) {
 
+    this.filtroProdBusqueda = '';
+    this.filtroProdCampo = '';
 
-setFilter(filtro:string){
+    if (filtro === '' || filtro === null || campo === '' || campo === null) {
+      this.listarProductos();
+    } else {
+      this.filtroProdBusqueda = filtro;
+      this.filtroProdCampo = campo;
+      this.nroPage = nroPag;
 
-this.filtroProdBusqueda = '';
+      this.listarProductosFilter();
+    }
+  }
 
-if(filtro === '' || filtro === null){
+  //----------DETALLES PRODUCTOS ---------------
+  detalleProducto(producto: any): void {
 
-this.listarProductos();
+    this.spinLoader(100);
 
-}else{
+    this.navigationExtras.state['value'] = producto;
+    this.router.navigate(['detalles-componentes'], this.navigationExtras);
+  }
 
-this.filtroProdBusqueda=filtro;
+  //----------EDITAR PRODUCTOS ---------------
+  editarProducto(producto: any): void {
 
-//console.log(this.filtroProdBusqueda);
+    this.spinLoader(100);
 
-this.listarProductosFilter();
-
-
-}
-}
-
-
-//----------DETALLES PRODUCTOS ---------------
-detalleProducto(producto : any): void{
-  //SPIN LOADING
-  this.ngxService.start();
-  setTimeout(() => {
-    this.ngxService.stop();
-  }, 100);
-  //FIN SPIN LOADING
-
-
-this.navigationExtras.state['value'] = producto;
-this.router.navigate(['detalles-componentes'] , this.navigationExtras);
-}
-
-
-//----------EDITAR PRODUCTOS ---------------
-editarProducto(producto : any): void{
-          //SPIN LOADING
-          this.ngxService.start();
-          setTimeout(() => {
-            this.ngxService.stop();
-          }, 100);
-          //FIN SPIN LOADING
-
-
-  this.navigationExtras.state['value'] = producto;
-  this.router.navigate(['editar-componentes'] , this.navigationExtras);
-}
+    this.navigationExtras.state['value'] = producto;
+    this.router.navigate(['editar-componentes'], this.navigationExtras);
+  }
 
   //----------CHECK ELIMINAR PRODUCTO----------
-  checkEliminarProducto(){
+  checkEliminarProducto() {
     this.isAdmin = this.tokenService.isAdmin();
   }
 
+  //----------ELIMINAR PRODUCTOS ---------------
+  eliminarProducto(id: string): void {
 
-//----------ELIMINAR PRODUCTOS ---------------
-eliminarProducto(id : string): void{
+    this.spinLoader(100);
 
-  //SPIN LOADING
-  this.ngxService.start();
-  setTimeout(() => {
-    this.ngxService.stop();
-  }, 100);
-  //FIN SPIN LOADING
+    this.productoService.delete(id).subscribe(
+      (data: any) => {
+
+        this.toast.success({
+          detail: 'Operación Exitosa',
+          summary: 'Se ha Eliminado el Producto!!',
+          duration: 2000,
+        });
+
+        console.log('Producto Eliminado');
+
+        this.refresh(2100);
+      },
+      (err) => {
+        this.errMsj = err.error.message;
+
+        //TOAST ERROR
+        setTimeout(() => {
+          this.toast.error({
+            detail: 'ERROR',
+            summary: this.errMsj,
+            duration: 2000,
+          });
+        }, 600);
+        //FIN TOAST ERROR
+        console.log(err);
+      }
+    );
+  }
+
+  //----------ELIMINAR PRODUCTOS ---------------
+  eliminarProductoNoAuth(id: number): void {
+
+    this.spinLoader(100);
+
+    this.toast.error({
+      detail: 'Operación No Autorizada',
+      summary: 'Servicio Habilitado para administradores!!',
+      duration: 2000,
+    });
+
+    this.refresh(2100);
+  }
 
 
-  this.productoService.delete(id).subscribe(
-    (data:any)=>{
 
-      this.toast.success({detail:"Operación Exitosa",summary:'Se ha Eliminado el Producto!!', duration:2000});
 
-      console.log("Producto Eliminado");
 
-      setTimeout(() => {
-        this.refresh();
-       }, 2100)
-    },
-    err => {
-      this.errMsj = err.error.message;
 
-      //TOAST ERROR
-      setTimeout(() => {
-       this.toast.error({detail:"ERROR",summary:this.errMsj , duration:2000});
-     }, 600);
-     //FIN TOAST ERROR
-   console.log(err);
+
+
+
+  //=============== UTILS ===============
+
+  //---------------- RECARGAR -------------------
+  refresh(ms: number) {
+    setTimeout(() => {
+      window.location.reload();
+    }, ms);
+  }
+
+  //---------- RUEDA DE CARGA ------------
+   spinLoader(ms: number) {
+    //SPIN LOADING
+    this.ngxService.start();
+    setTimeout(() => {
+      this.ngxService.stop();
+    }, ms);
+    //FIN SPIN LOADING
+  }
+
+  //------------- REDIRECCIONAR -------------------
+  redirect(page: String) {
+    this.router.navigate([page]);
+  }
+
+  //-----------  ID PRODUCTO SELECT-------------
+
+  setProductoSelect(producto: ProductoDTO) {
+    this.idProdSelect = producto.id;
+    this.codProdSelect = producto.codigo;
+    this.nombrProdSelect = producto.nombre;
+
+    console.log('Producto Seleccionado: ', producto);
+  }
+
+  //---------- GENERATE EXCEL ----------
+  name = 'listaProductos.xlsx';
+
+  generateExcel(): void {
+    let element = document.getElementById('table');
+    const worksheet: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    const book: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(book, worksheet, 'Sheet1');
+
+    XLSX.writeFile(book, this.name);
+  }
+
+  //=========== METODOS PAGINACION ==============
+
+  //Ordenar los registros por type
+  orderByDirection(type: string, direct: string): void {
+    this.orderBy = type;
+    this.direction = direct;
+
+    if (this.filtroProdBusqueda === '' || this.filtroProdBusqueda === null) {
+      this.listarProductos();
+    } else {
+      this.listarProductosFilter();
     }
-  );
-
-}
-
-
-
-//----------ELIMINAR PRODUCTOS ---------------
-eliminarProductoNoAuth(id : number): void{
-
-  //SPIN LOADING
-  this.ngxService.start();
-  setTimeout(() => {
-    this.ngxService.stop();
-  }, 100);
-  //FIN SPIN LOADING
-
-
-
-  this.toast.error({detail:"Operación No Autorizada",summary:'Servicio Habilitado para administradores!!', duration:2000});
-
-
-      setTimeout(() => {
-        this.refresh();
-       }, 2100)
-
-
-}
-
-
-
-//=============== UTILS ===============
-
-//---------------- RECARGAR -------------------
-refresh(){
-window.location.reload();
-}
-
-//------------- REDIRECCIONAR -------------------
-redirect(page:String){
-  this.router.navigate([page]);
-}
-
-//-----------  ID PRODUCTO SELECT-------------
-
-setProductoSelect(producto:ProductoDTO){
-
-this.idProdSelect = producto.id;
-this.codProdSelect=producto.codigo;
-this.nombrProdSelect=producto.nombre;
-
-console.log('Producto Seleccionado: ',producto);
-}
-
-//---------- GENERATE EXCEL ----------
-name = 'listaProductos.xlsx';
-
-generateExcel(): void {
-  let element = document.getElementById('table');
-  const worksheet: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
-
-  const book: XLSX.WorkBook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(book, worksheet, 'Sheet1');
-
-  XLSX.writeFile(book, this.name);
-}
-
-
-
-
-//=========== METODOS PAGINACION ==============
-
-//Ordenar los registros por type
-orderByDirection(type:string,direct:string):void{
-
-
-this.orderBy = type;
-this.direction = direct;
-
-if(this.filtroProdBusqueda === ''
-|| this.filtroProdBusqueda === null){
-
-  this.listarProductos();
-}else{
-
-  this.listarProductosFilter();
-
-}
-}
-
-
-//Pagina Anterior
-paginaAnterior():void{
-
-if(this.filtroProdBusqueda === ''
-|| this.filtroProdBusqueda === null){
-
-if(!this.isFirstPage){
-  this.nroPage--;
-  this.listarProductos();
-
-}else{
-
-  this.listarProductosFilter();
-}
-}
-}
-
-//Pagina Anterior
-paginaSiguiente():void{
-  if(this.filtroProdBusqueda === ''
-  || this.filtroProdBusqueda === null){
-
-  if(!this.isLastPage){
-    this.nroPage++;
-    this.listarProductos();
-
-  }else{
-
-    this.listarProductosFilter();
-  }
-  }
-}
-
-
-cambiarPagina(pagina:number):void{
-  this.nroPage=pagina;
-
-  if(this.filtroProdBusqueda === ''
-  || this.filtroProdBusqueda === null){
-
-    this.listarProductos();
-  }else{
-
-    this.listarProductosFilter();
   }
 
-}
-
-
-
-
-
-//=============== PRODUCTOS POR GRUPO =============
-countProdByGroup():void{
-
-  //this.nroProdAgua = this.productos.find.g
-
-}
-
-
+  //Pagina Anterior
+  paginaAnterior(): void {
+    if (this.filtroProdBusqueda === '' || this.filtroProdBusqueda === null) {
+      if (this.nroPage != 0 && this.nroPage > 0) {
+        this.nroPage--;
+        this.listarProductos();
+      } else {
+        //TOAST ERROR
+        setTimeout(() => {
+          this.toast.error({
+            detail: 'ERROR',
+            summary: 'No es Posible Disminuir una Página!!',
+            duration: 2000,
+          });
+        }, 600);
+        //FIN TOAST ERROR
+      }
+    }
   }
 
+  //Pagina Anterior
+  paginaSiguiente(): void {
+    if (this.filtroProdBusqueda === '' || this.filtroProdBusqueda === null) {
+      if (!this.isLastPage && this.nroPage >= 0) {
+        this.nroPage++;
+        this.listarProductos();
+      } else {
+        //TOAST ERROR
+        setTimeout(() => {
+          this.toast.error({
+            detail: 'ERROR',
+            summary: 'No es Posible Aumentar una Página!!',
+            duration: 2000,
+          });
+        }, 600);
+        //FIN TOAST ERROR
+      }
+    }
+  }
 
+  cambiarPagina(pagina: number): void {
+
+    this.nroPage = pagina;
+
+    if (this.filtroProdBusqueda === '' || this.filtroProdBusqueda === null) {
+      this.listarProductos();
+    } else {
+     this.listarProductosFilter();
+    }
+  }
+
+  //=============== PRODUCTOS POR GRUPO =============
+  countProdByGroup(): void {
+    //this.nroProdAgua = this.productos.find.g
+  }
+}

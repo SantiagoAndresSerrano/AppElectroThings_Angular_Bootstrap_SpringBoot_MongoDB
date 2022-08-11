@@ -22,8 +22,30 @@
         <!-- FORM FILTRO -->
         <div class="text-left col-7">
 
-          <div class="d-flex flex-row text-left col-12 m-2"
-            (ngSubmit)="setFilter(filtroInput.value)">
+          <div class="d-flex flex-row text-center col-10 m-2"
+            (ngSubmit)="setFilter(filtroInput.value, campoInput.value,0)">
+
+
+                   <!--SELECT FILTER-->
+        <select type="text"
+        name="categoria" #campoInput>
+        <option value="listado-filter">Todos</option>
+        <option value="codigo">Código</option>
+        <option value="nombre">Nombre</option>
+        <option value="descripcion">Descr.</option>
+        <option value="categoria">Categ.</option>
+        <option value="marca">Marca</option>
+        <option value="imagen">Imagen</option>
+        <option value="datasheet">Datash.</option>
+        <option value="stock">Stock</option>
+        <option value="precio">Precio</option>
+        <option value="fecha">Fecha</option>
+        <option value="hora">Hora</option>
+      </select>
+      <!--FIN SELECT FILTER-->
+
+
+
 
             <input type="text" name="filtro" class="form-control "
               placeholder="Buscador de Productos" aria-label="valor" id="filtro"
@@ -34,7 +56,7 @@
               <!--BTN BUSQUEDA-->
               <a>
                 <button class="btn bg-none p-1 border-dark" type="button"
-                  (click)="setFilter(filtroInput.value)" required>
+                  (click)="setFilter(filtroInput.value, campoInput.value,0)" required id="btnBusqueda">
                   <img src="./assets/images/search.png" alt="" width="45"
                     height="45" class="">
                 </button>
@@ -43,7 +65,7 @@
 
               <!--BTN LIMPIAR-->
               <button class="btn bg-none p-1 ms-2"
-                (click)="filtroInput.value=''">
+                (click)="filtroInput.value=''"  id="btnLimpiar">
                 <img src="./assets/forms/papelera.png" alt="" width="45"
                   height="45" class="">
               </button>
@@ -308,23 +330,27 @@
 
             <!--PAGINACION/REGRESAR/ACTUALIZAR-->
             <div class="container col-12">
+
               <div class="row justify-content-center">
 
                 <!--BTN'S PAGINATION-->
                 <div class="col-4 mt-2" id="pagination">
+
+
                   <nav aria-label="..." class="bg-none text-white">
                     <ul class="pagination pagination-lg bg-none text-white
                       border-light alert-link ">
                       <li class="page-item bg-none text-white "
-                        (click)="paginaAnterior()">
+                        (click)="cambiarPagina(0)">
                         <button class="btn btn-lg btn-outline-dark border-light
-                          alert-link text-white">Primera </button>
+                          alert-link text-white"> <img
+                          src="assets/pagination/arrowLastLeft.png" width="15" height="15" alt=""> </button>
                       </li>
                       <li class="page-item">
                         <button class="btn btn-lg btn-outline-dark border-light
                           alert-link text-white" (click)="paginaAnterior()">
                           <img
-                src="assets/pagination/arrowLeft.png" width="20" height="20" alt="">
+                src="assets/pagination/arrowLeft.png" width="15" height="15" alt="">
                         </button>
                       </li>
                       <li class="page-item ">
@@ -341,13 +367,15 @@
                       <li class="page-item">
                         <button class="btn btn-lg btn-outline-dark border-light
                           alert-link text-white" (click)="paginaSiguiente()">
-                          Siguiente
+                          <img
+                          src="assets/pagination/arrowRight.png" width="15" height="15" alt="">
                         </button>
                       </li>
                       <li class="page-item">
                         <button class="btn btn-lg btn-outline-dark border-light
-                          alert-link text-white" (click)="paginaSiguiente()">
-                          última
+                          alert-link text-white" (click)="cambiarPagina(this.totalPages - 1 )">
+                          <img
+                          src="assets/pagination/arrowLastRight.png" width="15" height="15" alt="">
                         </button>
                       </li>
                     </ul>
@@ -362,12 +390,12 @@
 
                 <!-- INFO NRO DE PAGINA Y ELEMENTOS -->
                 <div class="col-6 bg-none text-white border-light alert-link
-                  d-flex flex-row mt-2 ms-4" id="pagination">
+                  d-flex flex-row mt-2 ms-5" id="pagination">
 
-                  <nav aria-label="..." class="bg-none text-white">
+                  <nav aria-label="..." class="bg-none text-white ">
                     <ul class="pagination pagination-lg bg-none text-white
                       border-light alert-link ">
-                      <li class="page-item bg-none text-white ">
+                      <li class="page-item bg-none text-white ms-5">
                         <button *ngIf="nroTotalElements != 0" class="btn btn-lg
                           btn-outline-dark border-light alert-link text-white">
                           Página: {{nroPage + 1}} / {{totalPages}}</button>
@@ -435,16 +463,6 @@
                       </div>
                       <!-- FIN INFO NRO DE PAGINA Y ELEMENTOS -->
 
-
-
-
-
-
-
-                      <!--BTN'S RIGHT-->
-                      <div class=" col-4 d-flex flex-row" id="pagination">
-                      </div>
-                      <!--FIN BTN'S RIGHT-->
 
                     </div>
 

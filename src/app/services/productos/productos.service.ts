@@ -28,11 +28,6 @@ export class ProductosService {
     return this.httpClient.get<any>(`${this.urlProductosApi}listado?page=${nroPagina}&size=${nroElementos}&sort=${orderType},${orderBy}`);
   }
 
-//--- GET ALL FILTER---
-  public listadoFilter(filtro:string, nroPagina:number , nroElementos:number , orderType:string, orderBy:string ):Observable<ProductoDTO[]>{
-    return this.httpClient.get<any>(`${this.urlProductosApi}listado-filter/${filtro}?page=${nroPagina}&size=${nroElementos}&sort=${orderType},${orderBy}`);
-  }
-
 
     //--- GET ALL FILTER AND FIELD---
   //----APLICA TODOS LOS METODOS DE BUSQUEDA-----
