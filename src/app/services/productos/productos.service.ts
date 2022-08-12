@@ -31,7 +31,7 @@ export class ProductosService {
 
     //--- GET ALL FILTER AND FIELD---
   //----APLICA TODOS LOS METODOS DE BUSQUEDA-----
-  public listadoFilterAndField(filtro:string, campo:string, nroPagina:number , nroElementos:number , orderType:string, orderBy:string ):Observable<ProductoDTO[]>{
+  public listadoFilterAndField(campo:string,filtro:string,  nroPagina:number , nroElementos:number , orderType:string, orderBy:string ):Observable<ProductoDTO[]>{
     return this.httpClient.get<any>(`${this.urlProductosApi}${campo}/${filtro}?page=${nroPagina}&size=${nroElementos}&sort=${orderType},${orderBy}`);
   }
 
@@ -57,9 +57,11 @@ public add(producto:ProductoDTO):Observable<ProductoDTO>{
 
 
     //Lista de Productos desde Spring
-    public graficoStockMarca():Observable<any>{
-      return this.httpClient.get<any>(`${this.urlProductosApi}/grafico-stock-marca`);
+    public graficoStockMarca(nroPagina:number , nroElementos:number , orderType:string, orderBy:string):Observable<any>{
+      return this.httpClient.get<any>(`${this.urlProductosApi}grafico-stock-marca?page=${nroPagina}&size=${nroElementos}&sort=${orderType},${orderBy}`);
     }
+
+
 
 
 }

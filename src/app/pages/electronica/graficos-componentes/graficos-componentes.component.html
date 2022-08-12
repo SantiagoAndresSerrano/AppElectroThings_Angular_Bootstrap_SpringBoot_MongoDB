@@ -4,40 +4,133 @@
 
 
 
-<table class="table table-secondary table-bordered border-dark table-hover ">
-    <thead class="table-dark text-center">
+
+    <!-- TABLA PRODUCTOS -->
+    <table table-condensed class="table table-secondary table-bordered
+      border-dark table-hover m-3">
+      <thead class="table-dark text-center">
         <tr>
-            <th scope="row">
 
-                <div class="d-flex flex-row  justify-content-center m-2 p-1">
-                    <h6><strong></strong></h6>
+          <th scope="row">
+            <div class="d-flex flex-row justify-content-center p-1">
+              <p><strong>CÓDIGO</strong></p>
+
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex flex-row justify-content-center p-1">
+              <p><strong>NOMBRE</strong></p>
 
 
-                </div>
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex flex-row justify-content-center p-1">
+              <p><strong>DESCRIPCIÓN</strong></p>
 
-            </th>
+            </div>
+
+          </th>
+          <th scope="col">
+
+            <div class="d-flex flex-row justify-content-center p-1">
+              <p><strong>CATEGORÍA</strong></p>
+
+
+            </div>
+
+
+
+          </th>
+          <th scope="col">
+            <div class="d-flex flex-row justify-content-center p-1">
+              <p><strong>MARCA</strong></p>
+
+
+            </div>
+
+          </th>
+          <th scope="col">
+
+            <div class="d-flex flex-row justify-content-center p-1">
+
+              <p><strong>IMAGEN</strong></p>
+
+
+            </div>
+
+
+
+
+          </th>
+
+          <th scope="col">
+
+            <div class="d-flex flex-row justify-content-center p-1">
+
+              <p><strong>DATASHEET</strong></p>
+
+            </div>
+
+
+
+
+          </th>
+          <th scope="col">
+
+            <div class="d-flex flex-row justify-content-center p-1">
+              <p><strong>STOCK</strong></p>
+
+            </div>
+
+
+
+          </th>
+          <th scope="col">
+            <div class="d-flex flex-row justify-content-center p-1">
+              <p><strong>PRECIO</strong></p>
+
+
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex flex-row justify-content-center p-1">
+              <p><strong>FECHA</strong></p>
+
+
+              <p><strong>HORA</strong></p>
+
+            </div>
+          </th>
 
         </tr>
-    </thead>
-    <tbody class="table-dark bg-dark text-center">
+      </thead>
+
+      <!-- REGISTROS FILTRO -->
+      <tbody class="table-dark bg-dark text-center">
         <!--Replicamos 4 veces los productos e iconos-->
         <tr *ngFor="let producto of productos">
-            <th scope="row" class="text-white">
 
-                <button class=" btn  border-dark bg-secondary justify-content-center p-1 ms-2" type="button" (click)="agregarNombresGrafico('producto.nombre')">
-                <img src="assets/list/sort01.png" width="15"  alt=""></button>
-                <h4>{{producto.nombre}}</h4>
-            </th>
+          <th scope="row" class="text-white text-center">{{producto.codigo}}</th>
+          <td>{{producto.nombre}}</td>
+          <td>{{producto.descripcion}}</td>
+          <td>{{producto.categoria}}</td>
+          <td>{{producto.marca}}</td>
+          <td class="bg-white">
+            <img src={{producto.imagen}} target="_blank" width="70px"
+              height="70px"></td>
+          <td>
+            <a href={{producto.hojaDatos}} target="_blank"> <img
+                src="assets/images/pdf.png" width="40" height="40" alt=""></a></td>
+          <td>{{producto.stock}} u.</td>
+          <td>${{producto.precio}}</td>
+          <td>{{producto.fecha}} / {{producto.hora}}</td>
 
 
+                </tr>
 
-            <!--En caso de moviles ocultamos -->
+              </tbody>
+              <!-- FIN REGISTROS-->
 
-        </tr>
-        <div>
-            <h4></h4>
-        </div>
-
-    </tbody>
-
-</table>
+            </table>
+            <!-- FIN TABLA PRODUCTOS -->

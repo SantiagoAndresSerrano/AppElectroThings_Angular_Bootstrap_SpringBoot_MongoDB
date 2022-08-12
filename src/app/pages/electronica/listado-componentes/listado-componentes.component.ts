@@ -115,8 +115,8 @@ export class ListadoComponentesComponent implements OnInit {
   listarProductosFilter() {
     this.productoService
       .listadoFilterAndField(
-        this.filtroProdBusqueda,
         this.filtroProdCampo,
+        this.filtroProdBusqueda,
         this.nroPage,
         this.nroElements,
         this.orderBy,
@@ -156,14 +156,16 @@ export class ListadoComponentesComponent implements OnInit {
 
   setFilter(filtro: string, campo: string, nroPag:number) {
 
-    this.filtroProdBusqueda = '';
+
     this.filtroProdCampo = '';
+    this.filtroProdBusqueda = '';
 
     if (filtro === '' || filtro === null || campo === '' || campo === null) {
       this.listarProductos();
     } else {
-      this.filtroProdBusqueda = filtro;
+
       this.filtroProdCampo = campo;
+      this.filtroProdBusqueda = filtro;
       this.nroPage = nroPag;
 
       this.listarProductosFilter();
