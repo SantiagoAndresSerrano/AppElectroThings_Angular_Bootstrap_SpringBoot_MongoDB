@@ -38,9 +38,10 @@ export class ListadoComponentesComponent implements OnInit {
   isAdmin = false;
   isUser = false;
 
-  //PAGINADO
+  //TYPE LIST
+  typeListTable = true;
 
-  //Pages
+  //PAGINADO
   nroPage = 0;
   isFirstPage = false;
   isLastPage = false;
@@ -284,6 +285,11 @@ export class ListadoComponentesComponent implements OnInit {
     this.nombrProdSelect = producto.nombre;
 
     console.log('Producto Seleccionado: ', producto);
+  }
+
+  //------------TYPE LIST ---------------
+  setTypeListTable(set:boolean){
+    this.typeListTable = set;
   }
 
   //---------- GENERATE EXCEL ----------
