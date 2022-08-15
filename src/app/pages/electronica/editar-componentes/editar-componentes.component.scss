@@ -32,3 +32,22 @@ div .container {
 
   }
  }
+
+ #btnForm{
+
+  button{
+    border: none;
+    border-radius: none;
+  }
+   button:hover{
+      background-color: #393e43;
+    }
+    button:focus{
+      background-color: #58616b;
+    }
+
+
+
+  }
+
+

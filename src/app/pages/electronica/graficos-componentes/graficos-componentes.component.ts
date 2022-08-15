@@ -8,6 +8,7 @@ import { Observable, Subject } from 'rxjs';
 import { ProductoDTO } from 'src/app/models/producto-dto';
 import { ProductosService } from 'src/app/services/productos/productos.service';
 import { TokenService } from 'src/app/services/token/token.service';
+import { filter, map, tap,take,count } from 'rxjs/operators';
 
 highcharts3D(Highcharts);
 
@@ -27,8 +28,7 @@ export class GraficosComponentesComponent implements OnInit {
   productos: ProductoDTO[] = [];
 
   //FILTRO BUSQUEDA PRODUCTOS
-  filtroProdCampo: string = 'categoria';
-  filtroProdBusqueda: string = '';
+  filtroProdBusqueda: string = 'Microcontroladores';
 
   //SEGURIDAD
   isAdmin = false;
@@ -43,7 +43,7 @@ export class GraficosComponentesComponent implements OnInit {
   totalPages = 0;
 
   //Elements
-  nroElements = 10;
+  nroElements = 100;
   nroCurrentElements = 0;
   nroTotalElements = 0;
 
@@ -68,10 +68,11 @@ export class GraficosComponentesComponent implements OnInit {
   ];
 
   //Stock
-  nroStockGamer: number = 0;
-  nroStockMonitores: number = 0;
+  //nroStockGamer: number = 0;
+  //nroStockMonitores: number = 0;
+  nroStock: number = 0;
 
-  stock: number[] = [];
+   stock: number[] = [];
 
   Highcharts: typeof Highcharts = Highcharts;
   chartConstructor: string = 'chart';
@@ -87,73 +88,40 @@ export class GraficosComponentesComponent implements OnInit {
 
   ngOnInit() {
 
-    this.stockGamer();
-    this.stockMonitores();
-    this.loadStock();
-    console.log(this.stock);
+
+    this.getStock();
+
     this.generateChart();
 
   }
 
-  //=============METODOS CRUD========================
-
-  //-----LISTADO PRODUCTOS FILTER GAMER ---------------
-  stockGamer() {
-    const filtro: string = 'Gamer';
-
-    this.filtroProdBusqueda = filtro;
-
-    this.productoService
-      .listadoFilterAndField(
-        this.filtroProdCampo,
-        this.filtroProdBusqueda,
-        this.nroPage,
-        this.nroElements,
-        this.orderBy,
-        this.direction
-      )
-      .subscribe((data: any) => {
-
-        this.nroStockGamer = data.numberOfElements;
-
-      });
-
-  }
-
-  //-----LISTADO PRODUCTOS FILTER MONITORES ---------------
-  stockMonitores() {
-    const filtro: string = 'Monitores';
-
-    this.filtroProdBusqueda = filtro;
-
-    this.productoService
-      .listadoFilterAndField(
-        this.filtroProdCampo,
-        this.filtroProdBusqueda,
-        this.nroPage,
-        this.nroElements,
-        this.orderBy,
-        this.direction
-      )
-      .subscribe((data: any) => {
-
-        this.nroStockMonitores = data.numberOfElements;
-
-        //this.nroStockMonitores = data.numberOfElements;
-
-      });
-
-  }
-
-
-  loadStock(){
-      this.stock[0] = this.nroStockGamer;
-      this.stock[1] = this.nroStockMonitores;
-
-
-  }
-
   //=============== UTILS ===============
+
+  //----------LISTADO PRODUCTOS ---------------
+  stockByCateg() {
+    this.productoService
+      .stockByCateg(this.filtroProdBusqueda,this.nroPage, this.nroElements, this.orderBy, this.direction)
+      .subscribe(
+        (data: number) => {
+
+          console.log('data',data);
+
+          this.nroStock = data;
+
+
+        }
+      );
+
+  }
+
+  getStock(){
+    
+    this.stockByCateg();
+
+    this.stock.push(this.nroStock);
+
+    console.log('ss',this.stock);
+  }
 
   //---------------- RECARGAR -------------------
   refresh(ms: number) {
@@ -198,17 +166,23 @@ export class GraficosComponentesComponent implements OnInit {
           depth: 50,
           viewDistance: 25,
         },
+
         events:{
+/*
           load: function() {
             var series = this.series[0],
             last = series.data[series.data.length - 1];
             setInterval(function() {
               //var p1 = Math.random() * 3;
               //series.addPoint(p1);
+              console.log(this.stock);
               series.addPoint(this.stock);
             }, 1000)
         }
+        */
+
       }
+
       },
       title: {
         text: 'Stock de Productos Por Categoría',
@@ -271,6 +245,7 @@ export class GraficosComponentesComponent implements OnInit {
             enabled: true,
           },
           data: this.stock,
+
           color: '#5F96F3',
         },
       ],

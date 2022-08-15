@@ -35,6 +35,11 @@ export class ProductosService {
     return this.httpClient.get<any>(`${this.urlProductosApi}${campo}/${filtro}?page=${nroPagina}&size=${nroElementos}&sort=${orderType},${orderBy}`);
   }
 
+      //--- GET STOCK BY CATEG---
+  public stockByCateg(filtro:string,  nroPagina:number , nroElementos:number , orderType:string, orderBy:string ):Observable<number>{
+    return this.httpClient.get<number>(`${this.urlProductosApi}stock-categoria/${filtro}?page=${nroPagina}&size=${nroElementos}&sort=${orderType},${orderBy}`);
+  }
+
 //--- ADD ---
 public add(producto:ProductoDTO):Observable<ProductoDTO>{
   return this.httpClient.post<any>(`${this.urlProductosApi}`,producto);

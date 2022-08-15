@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { StorageEncryptedService } from './storage-enccrypted/storage-encrypted.service';
 
 
 //Variables que se almacenan en el cliente
@@ -13,17 +14,20 @@ export class TokenService {
 
   roles: Array<string> = [];
 
-  constructor(private router:Router) { }
+  constructor(
+    private router:Router,
+    private storageService:StorageEncryptedService
+    ) { }
 
 
   //================= TOKEN ===============
 public setToken(token:string):void{
-  window.localStorage.removeItem(TOKEN_KEY);
-  window.localStorage.setItem(TOKEN_KEY,token);
+  this.storageService.secureStorage.removeItem(TOKEN_KEY);
+  this.storageService.secureStorage.setItem(TOKEN_KEY, token);
 }
 
 public getToken(): string{
-  return localStorage.getItem(TOKEN_KEY)!;
+  return this.storageService.secureStorage.getItem(TOKEN_KEY);
 }
 
 
