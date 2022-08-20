@@ -117,7 +117,13 @@
     * Implementación : https://tdev.app/ngx-ui-loader
 
 * Excel Sheets
+    * Instalación y Doc : https://www.npmjs.com/package/xlsx
     * Ejemplo Base : https://www.delftstack.com/howto/angular/angular-export-to-excel/
+    
+* JSPDF
+    * Ejemplo Base : https://www.positronx.io/angular-pdf-tutorial-export-pdf-in-angular-with-jspdf/
+    * Otro ej. : https://howtojs.io/how-to-generate-pdf-file-in-angular-13-application-in-multiple-ways/
+
 
 * Gráficos con Highchart
     * Npm, config, detalles, etc : https://hackthestuff.com/article/how-to-use-highcharts-in-angular-12
@@ -129,9 +135,7 @@
     * Ejemplo Base 2d : https://stackblitz.com/edit/highcharts-angular-basic-line-ucnkbj?file=src%2Fapp%2Fapp.component.ts
     * Modificación Gráfico 2d a 3d : https://www.eduforbetterment.com/3d-pie-and-donut-chart-in-angular-using-highchart/
 
-* Treemap Graphic
-    * Ej. Base : https://stackblitz.com/edit/highcharts-angular-treemap?file=app%2Fapp.component.ts
-    * Ej. Base algunas configs : https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/demo/treemap-with-levels
+
 
 * Cifrado Token (CriptoJs) y Secure Local Storage
     * Guía de Uso : https://rupesh94.medium.com/how-to-encrypt-localstorage-data-in-angular-270ebcbc1435
