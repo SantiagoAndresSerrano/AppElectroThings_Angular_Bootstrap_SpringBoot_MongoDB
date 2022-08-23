@@ -6,7 +6,7 @@
 
 </br>
 
-## ` POR RAZONES DE LIMITACIONES DE ALMACENAMIENTO Y LIMITACIONES DE TRANSFERENCIA DE DATOS PARA LSF (Large File Storage) SE MIGRA ESTE PROYECTO A GITLAB`: https://gitlab.com/andres-weitzel/AppTiendaElectronica_Angular_Bootstrap_SpringBoot_MongoDB
+* ` POR RAZONES DE LIMITACIONES DE ALMACENAMIENTO Y LIMITACIONES DE TRANSFERENCIA DE DATOS PARA LSF (Large File Storage) SE MIGRA ESTE PROYECTO A GITLAB`: https://gitlab.com/andres-weitzel/AppTiendaElectronica_Angular_Bootstrap_SpringBoot_MongoDB
 
 </br>
 
