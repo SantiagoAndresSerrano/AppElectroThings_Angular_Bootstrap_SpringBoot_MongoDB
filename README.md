@@ -4,7 +4,9 @@
 * Repositorio ApiRest_ElectroThingsV1 : https://github.com/andresWeitzel/ApiRest_ElectroThingsV1_SpringBoot_MongoDB
 * Repositorio db_ElectroThings_MongoDB : https://github.com/andresWeitzel/db_ElectroThings_MongoDB
 
+</br>
 
+## ` POR RAZONES DE LIMITACIONES DE ALMACENAMIENTO Y LIMITACIONES DE TRANSFERENCIA DE DATOS PARA LSF (Large File Storage) SE MIGRA ESTE PROYECTO A GITLAB`: https://gitlab.com/andres-weitzel/AppTiendaElectronica_Angular_Bootstrap_SpringBoot_MongoDB
 
 </br>
 
