@@ -1,6 +1,6 @@
-# AppTiendaElectronica_Angular_Bootstrap_SpringBoot_MongoDB.`(Migrado)`
+# AppElectroThings_Angular_Bootstrap_SpringBoot_MongoDB.`(Migrado)`
 
-* Aplicación Tienda de Electrónica para la Gestión de Productos Electrónicos 
+* Aplicación Electrothings para la Gestión de Productos Electrónicos 
 * Repositorio ApiRest_ElectroThingsV1 : https://github.com/andresWeitzel/ApiRest_ElectroThingsV1_SpringBoot_MongoDB
 * Repositorio db_ElectroThings_MongoDB : https://github.com/andresWeitzel/db_ElectroThings_MongoDB
 
