@@ -10,7 +10,6 @@ import { CarouselModule } from './components/carousel/carousel.module';
 import { FooterComponent } from './components/footer/footer.component';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from '@angular/forms';
-import { NgToastModule } from 'ng-angular-popup';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, SPINNER } from 'ngx-ui-loader';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
@@ -59,7 +58,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     FormsModule,
     MdbFormsModule,
     MdbValidationModule,
-    NgToastModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
     BrowserAnimationsModule,

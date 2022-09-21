@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import * as Highcharts from 'highcharts';
 import highcharts3D from 'highcharts/highcharts-3d';
-import { NgToastService } from 'ng-angular-popup';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Observable, Subject } from 'rxjs';
 import { ProductoDTO } from 'src/app/models/producto-dto';
@@ -82,7 +81,7 @@ export class GraficosComponentesComponent implements OnInit {
     private router: Router,
     private productoService: ProductosService,
     private tokenService: TokenService,
-    private toast: NgToastService,
+    // private toast: NgToastService,
     private ngxService: NgxUiLoaderService
   ) {}
 

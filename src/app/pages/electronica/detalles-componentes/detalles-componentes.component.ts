@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { NgToastService } from 'ng-angular-popup';
+// import { NgToastService } from 'ng-angular-popup';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ProductoDTO } from 'src/app/models/producto-dto';
 import { ProductosService } from 'src/app/services/productos/productos.service';
@@ -52,7 +52,7 @@ errMsj: string;
     private router: Router,
     private productoService:ProductosService,
     private tokenService:TokenService,
-    private toast: NgToastService,
+    // private toast: NgToastService,
     private ngxService: NgxUiLoaderService,
 
   ) {
@@ -112,7 +112,7 @@ eliminarProducto(id : string): void{
   this.productoService.delete(id).subscribe(
     (data:any)=>{
 
-      this.toast.success({detail:"Operación Exitosa",summary:'Se ha Eliminado el Producto!!', duration:2000});
+      // this.toast.success({detail:"Operación Exitosa",summary:'Se ha Eliminado el Producto!!', duration:2000});
 
       console.log("Producto Eliminado");
 
@@ -125,7 +125,7 @@ eliminarProducto(id : string): void{
 
       //TOAST ERROR
       setTimeout(() => {
-       this.toast.error({detail:"ERROR",summary:this.errMsj , duration:2000});
+      //  this.toast.error({detail:"ERROR",summary:this.errMsj , duration:2000});
      }, 600);
      //FIN TOAST ERROR
    console.log(err);
@@ -148,7 +148,7 @@ eliminarProductoNoAuth(id : number): void{
 
 
 
-  this.toast.error({detail:"Operación No Autorizada",summary:'Servicio Habilitado para administradores!!', duration:2000});
+  // this.toast.error({detail:"Operación No Autorizada",summary:'Servicio Habilitado para administradores!!', duration:2000});
 
 
       setTimeout(() => {

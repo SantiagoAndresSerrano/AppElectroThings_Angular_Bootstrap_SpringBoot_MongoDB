@@ -41,7 +41,7 @@ export class ProductosService {
   }
 
 //--- ADD ---
-public add(producto:ProductoDTO):Observable<ProductoDTO>{
+public add(producto:any):Observable<ProductoDTO>{
   return this.httpClient.post<any>(`${this.urlProductosApi}`,producto);
 }
 

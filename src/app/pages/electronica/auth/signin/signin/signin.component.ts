@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgToastService } from 'ng-angular-popup';
+// import { NgToastService } from 'ng-angular-popup';
 import { SigninUsuarioDto } from 'src/app/models/signin-usuario-dto';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { TokenService } from 'src/app/services/token/token.service';
@@ -30,7 +30,7 @@ formGroup: FormGroup;
     private tokenService: TokenService,
     private authService: AuthService,
     private router: Router,
-    private toast: NgToastService
+    // private toast: NgToastService
   ) { }
 
   ngOnInit() {
@@ -139,9 +139,9 @@ refresh(){
 
           console.log('usuario registrado');
 
-         this.toast.success({detail:"Operación Exitosa "
-         ,summary:'Se ha registrado un nuevo Usuario!'
-         , duration:2000});
+        //  this.toast.success({detail:"Operación Exitosa "
+        //  ,summary:'Se ha registrado un nuevo Usuario!'
+        //  , duration:2000});
 
          setTimeout(() => {
           this.router.navigate(['login']);
@@ -155,7 +155,7 @@ refresh(){
 
         console.log(this.errMsj);
 
-        this.toast.error({detail:"Error",summary:this.errMsj, duration:2000});
+        // this.toast.error({detail:"Error",summary:this.errMsj, duration:2000});
       },
     );
 

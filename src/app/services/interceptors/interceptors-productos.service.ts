@@ -10,7 +10,6 @@ import {
 import { Injectable } from '@angular/core';
 import { Router, RouterEvent, RouterState } from '@angular/router';
 import { request } from 'http';
-import { NgToastService } from 'ng-angular-popup';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Observable, throwError } from 'rxjs';
 import { catchError, concatMap, retry } from 'rxjs/operators';
@@ -31,7 +30,6 @@ export class InterceptorsProductosService implements HttpInterceptor {
     private authService: AuthService,
     private productoService : ProductosService,
     private router: Router,
-    private toast: NgToastService,
     private ngxService: NgxUiLoaderService
   ) {}
   intercept(
@@ -123,13 +121,13 @@ export class InterceptorsProductosService implements HttpInterceptor {
     //-------------- TOAST --------------------
    toastError(respuesta: string) {
     //TOAST ERROR
-    setTimeout(() => {
-      this.toast.error({
-        detail: 'ERROR',
-        summary: respuesta,
-        duration: 2000,
-      });
-    }, 600);
+    // setTimeout(() => {
+    //   this.toast.error({
+    //     detail: 'ERROR',
+    //     summary: respuesta,
+    //     duration: 2000,
+    //   });
+    // }, 600);
     //FIN TOAST ERROR
   }
 }

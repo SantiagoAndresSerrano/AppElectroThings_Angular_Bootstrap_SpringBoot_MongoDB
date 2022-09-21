@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgToastService } from 'ng-angular-popup';
+// import { NgToastService } from 'ng-angular-popup';
 import { ProductoDTO } from 'src/app/models/producto-dto';
 import { ProductosService } from 'src/app/services/productos/productos.service';
 
@@ -47,7 +47,7 @@ export class EditarComponentesComponent implements OnInit{
     private router: Router,
     private productoService: ProductosService,
     private tokenService: TokenService,
-    private toast: NgToastService,
+    // private toast: NgToastService,
     private formBuilder: FormBuilder
 
   ) {
@@ -84,11 +84,11 @@ export class EditarComponentesComponent implements OnInit{
     if (!this.isAdmin && !this.isUser) {
       this.router.navigate(['/login']);
     } else if (!this.isAdmin) {
-      this.toast.error({
-        detail: 'Operación No Autorizada',
-        summary: 'Servicio Habilitado para administradores!!',
-        duration: 2000,
-      });
+      // this.toast.error({
+      //   detail: 'Operación No Autorizada',
+      //   summary: 'Servicio Habilitado para administradores!!',
+      //   duration: 2000,
+      // });
 
       setTimeout(() => {
         this.router.navigate(['/listado-componentes']);
@@ -340,11 +340,11 @@ export class EditarComponentesComponent implements OnInit{
       (data) => {
         console.log(nuevoProducto);
 
-        this.toast.success({
-          detail: 'Operación Exitosa',
-          summary: 'Se ha Actualizado el Producto!!',
-          duration: 2000,
-        });
+        // this.toast.success({
+        //   detail: 'Operación Exitosa',
+        //   summary: 'Se ha Actualizado el Producto!!',
+        //   duration: 2000,
+        // });
 
         setTimeout(() => {
           this.router.navigate(['listado-componentes']);
@@ -355,11 +355,11 @@ export class EditarComponentesComponent implements OnInit{
 
         console.log(this.errMsj);
 
-        this.toast.error({
-          detail: 'Error',
-          summary: this.errMsj,
-          duration: 2000,
-        });
+        // this.toast.error({
+        //   detail: 'Error',
+        //   summary: this.errMsj,
+        //   duration: 2000,
+        // });
       }
     );
   }

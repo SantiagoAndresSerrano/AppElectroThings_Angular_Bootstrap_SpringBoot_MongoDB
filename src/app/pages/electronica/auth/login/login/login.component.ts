@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgToastService } from 'ng-angular-popup';
+// import { NgToastService } from 'ng-angular-popup';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { LoginUsuarioDto } from 'src/app/models/login-usuario-dto';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     private tokenService: TokenService,
     private authService : AuthService,
     private router: Router,
-    private toast: NgToastService,
+    // private toast: NgToastService,
     private ngxService: NgxUiLoaderService
 
   ) { }
@@ -61,12 +61,7 @@ export class LoginComponent implements OnInit {
    this.loginUsuarioDto = new LoginUsuarioDto(this.username, this.password);
    this.authService.login(this.loginUsuarioDto).subscribe(
      data => {
-
-
-
        this.router.navigate(['/inicio-componentes']);
-
-
        setTimeout(() => {
 
          this.isLogged = true;
@@ -74,7 +69,7 @@ export class LoginComponent implements OnInit {
 
          this.tokenService.setToken(data.token);
 
-         this.toast.success({detail:"Credenciales Válidas",summary:'Bienvenido/a!', duration:1400});
+        //  this.toast.success({detail:"Credenciales Válidas",summary:'Bienvenido/a!', duration:1400});
 
 
          window.setTimeout(function(){location.reload()},1500)
@@ -83,10 +78,6 @@ export class LoginComponent implements OnInit {
 
 
         }, 600);
-
-
-
-
      },
 
      err => {
@@ -105,7 +96,7 @@ export class LoginComponent implements OnInit {
 
          //TOAST ERROR
      setTimeout(() => {
-       this.toast.error({detail:"ERROR",summary:'Credenciales No' , duration:2000});
+      //  this.toast.error({detail:"ERROR",summary:'Credenciales No' , duration:2000});
      }, 600);
      //FIN TOAST ERROR
 
