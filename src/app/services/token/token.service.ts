@@ -115,10 +115,6 @@ public isLogged():boolean{
   return null;
   }
 
-
-
-
-
   public isUser(): boolean{
 
     if(!(this.isLogged)){
