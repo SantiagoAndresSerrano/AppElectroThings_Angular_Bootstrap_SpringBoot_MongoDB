@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
 
 
-urlAuthApi : string = environment.URL_AUTH_API;
+urlAuthApi : string = "http://localhost:8098/api/v1/auth/";
 
 
 
