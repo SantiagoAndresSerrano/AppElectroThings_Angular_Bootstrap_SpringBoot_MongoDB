@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
 
 
-urlAuthApi : string = "http://localhost:8098/api/v1/auth/";
+urlAuthApi : string = "https://electro-thingsv1.herokuapp.com/api/v1/auth/";
 
 
 

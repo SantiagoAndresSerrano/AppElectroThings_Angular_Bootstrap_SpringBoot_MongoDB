@@ -13,7 +13,7 @@ import { ProductoDTO } from '../../models/producto-dto';
 export class ProductosService {
 
 
-  urlProductosApi : string = "http://localhost:8098/api/v1/productos/";
+  urlProductosApi : string = "https://electro-thingsv1.herokuapp.com/api/v1/productos/";
 
 
 
