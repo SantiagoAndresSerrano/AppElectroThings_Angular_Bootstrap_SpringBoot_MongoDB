@@ -7,6 +7,8 @@
 
 # You can see what browsers were selected by your queries by running:
 #   npx browserslist
+not ios_saf 15.2-15.3
+not safari 15.2-15.3
 
 last 1 Chrome version
 last 1 Firefox version
